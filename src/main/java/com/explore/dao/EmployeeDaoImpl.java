@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.explore.entity.Employee;
@@ -54,7 +55,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public List<Employee> getAllEmp() {
-		return null;
+		List<Employee> list = new ArrayList<Employee>();
+		
+		
+		
+		list.add(null);
+		
+		
+		return list;
 	}
 
 	@Override
