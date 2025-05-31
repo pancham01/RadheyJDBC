@@ -1,6 +1,7 @@
 package com.explore.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.explore.entity.Employee;
 
@@ -12,6 +13,8 @@ public interface EmployeeDao {
 
 	public void deleteEmp(int id);
 
-	public void getAllEmp();
+	public void printAllEmp();
+	
+	public List<Employee> getAllEmp();
 
 }

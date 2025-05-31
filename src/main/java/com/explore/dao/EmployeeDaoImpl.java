@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import com.explore.entity.Employee;
 
@@ -52,7 +53,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public void getAllEmp() {
+	public List<Employee> getAllEmp() {
+		return null;
+	}
+
+	@Override
+	public void printAllEmp() {
+		// TODO Auto-generated method stub
 
 	}
 
