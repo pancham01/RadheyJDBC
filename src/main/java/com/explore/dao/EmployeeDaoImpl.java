@@ -2,21 +2,23 @@ package com.explore.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import com.explore.entity.Employee;
-import com.mysql.cj.jdbc.Driver;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	private static final String INSERT_QUERY = "INSERT INTO EMPLOYEE VALUES (%d,'%s','%s',%d)";
+	private static final String INSERT_QUERY_BY_PS = "INSERT INTO EMPLOYEE VALUES (?,?,?,?)";
 	private static final String UPDATE_QUERY = "UPDATE EMPLOYEE SET NAME = '%s', GENDER = '%s', SALARY = %d WHERE ID = %d";
 	private static final String SELECT_QUERY = "SELECT * FROM EMPLOYEE";
+	private static final String SELECT_EMP_BY_NAME_QUERY = "SELECT * FROM EMPLOYEE WHERE NAME = '%s'";
+//	private static final String SELECT_EMP_BY_NAME_QUERY = "SELECT * FROM EMPLOYEE WHERE NAME = 'abc' or '1 = 1'";
 
 	private static Connection conn = null;
 
@@ -103,6 +105,40 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			exception.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void getEmpByName(String name) {
+
+		try (Statement statement = conn.createStatement()) {
+
+			ResultSet rs = statement.executeQuery(String.format(SELECT_EMP_BY_NAME_QUERY, name));
+
+			while (rs.next()) {
+				System.out.println("ID = " + rs.getInt(1) + "\t NAME = " + rs.getString(2) + "\t Gender = "
+						+ rs.getString(3) + "\t Salary = " + rs.getInt(4));
+			}
+
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	@Override
+	public void saveEmpByPs(Employee e) {
+
+		try (PreparedStatement ps = conn.prepareStatement(INSERT_QUERY_BY_PS)) {
+
+			ps.setInt(1, e.getId());
+			ps.setString(2, e.getName());
+			ps.setString(3, e.getGender());
+			ps.setInt(4, e.getSalary());
+			ps.executeUpdate();
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println("EmployeeDaoImpl.saveEmpByPs()");
 	}
 
 }

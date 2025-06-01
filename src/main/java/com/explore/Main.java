@@ -15,7 +15,7 @@ public class Main {
 		
 		EmployeeDao edao = new EmployeeDaoImpl();
 
-//		Employee ankit = new Employee(14 , "Lokesh", "N/A", 77777);
+		Employee ankit = new Employee(16 , "Akash", "Male", 77777);
 		
 //		edao.saveEmp(ankit);
 		
@@ -24,12 +24,19 @@ public class Main {
 		
 //		edao.printAllEmp();
 		
-		List<Employee> allEmp = edao.getAllEmp();
+//		List<Employee> allEmp = edao.getAllEmp();
+//		
+//		for(Employee e : allEmp)
+//		{
+//			System.out.println(e);
+//		}
 		
-		for(Employee e : allEmp)
-		{
-			System.out.println(e);
-		}
+		
+//		edao.getEmpByName("abc' or '1 = 1");
+		
+		edao.saveEmpByPs(ankit);
+		
+		edao.printAllEmp();
 
 		
 	}
