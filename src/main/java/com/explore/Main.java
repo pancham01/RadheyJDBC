@@ -34,7 +34,12 @@ public class Main {
 		
 //		edao.getEmpByName("abc' or '1 = 1");
 		
-		edao.saveEmpByPs(ankit);
+//		edao.saveEmpByPs(ankit);
+		
+		edao.deleteEmp(116);
+		
+		
+		edao.insertBatch();
 		
 		edao.printAllEmp();
 

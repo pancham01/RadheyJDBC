@@ -16,6 +16,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private static final String INSERT_QUERY = "INSERT INTO EMPLOYEE VALUES (%d,'%s','%s',%d)";
 	private static final String INSERT_QUERY_BY_PS = "INSERT INTO EMPLOYEE VALUES (?,?,?,?)";
 	private static final String UPDATE_QUERY = "UPDATE EMPLOYEE SET NAME = '%s', GENDER = '%s', SALARY = %d WHERE ID = %d";
+	private static final String DELETE_QUERY = "DELETE FROM EMPLOYEE  WHERE ID = %d";
 	private static final String SELECT_QUERY = "SELECT * FROM EMPLOYEE";
 	private static final String SELECT_EMP_BY_NAME_QUERY = "SELECT * FROM EMPLOYEE WHERE NAME = '%s'";
 //	private static final String SELECT_EMP_BY_NAME_QUERY = "SELECT * FROM EMPLOYEE WHERE NAME = 'abc' or '1 = 1'";
@@ -61,6 +62,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public void deleteEmp(int id) {
+		
+		try (Statement statement = conn.createStatement()) {
+
+			statement.executeUpdate(String.format(DELETE_QUERY, id));
+
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+
+		System.out.println("EmployeeDaoImpl.delete()");
 
 	}
 
@@ -139,6 +150,27 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			e1.printStackTrace();
 		}
 		System.out.println("EmployeeDaoImpl.saveEmpByPs()");
+	}
+
+	@Override
+	public void insertBatch() throws SQLException {
+
+		conn.setAutoCommit(false);
+		PreparedStatement ps = conn.prepareStatement(INSERT_QUERY_BY_PS);
+
+		for (int i = 1; i <= 100; i++) {
+			ps.setInt(1, 16 + i);
+			ps.setString(2, "Guest " + i);
+			ps.setString(3, "M");
+			ps.setInt(4, 50_000);
+			ps.addBatch();
+
+			if (i % 100 == 0) {
+				ps.executeBatch();
+				conn.commit();
+			}
+
+		}
 	}
 
 }
